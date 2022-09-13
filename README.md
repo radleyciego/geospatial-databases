@@ -5,8 +5,8 @@
 ### Basic SQL SELECT query
 
 All customers whose first name is Kelly or Tony
-''' SQL
+''' sql
 SELECT *
 FROM customers
-WHERE first_name ('Kelly','Tony')
+WHERE first_name IN ('Kelly','Tony');
 '''
