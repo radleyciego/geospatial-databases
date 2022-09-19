@@ -5,7 +5,7 @@ WHERE first_name = 'Kelly' OR first_name = 'Tony'
 
 -- Select all films where length is over 120 minutes
 SELECT *
-from film
+FROM film
 WHERE length > 120
 
 -- We use the WHERE function to filter films that have descriptions like drama or documentary
