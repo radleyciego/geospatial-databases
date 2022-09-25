@@ -1,9 +1,7 @@
 # Lab 02 Assignment: SQL Statements in PostgreSQL
-Radley Ciego
-
-September 29, 2022
-
-GTECH 78519: Geospatial Databases
+<br> Radley Ciego <br>
+<br>September 29, 2022<br>
+<br>GTECH 78519: Geospatial Databases<br>
 <br> Lab 2, Q1: <br>
 
 ```sql
