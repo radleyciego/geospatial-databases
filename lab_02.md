@@ -48,3 +48,12 @@ ORDER BY refund DESC;
 <br> Results in pgAdmin: <br>
 
 ![Lab 2, Q3 Result:](img/q3.png)
+
+<br>Lab 2, Q4: <br>
+
+```sql
+/* Use JOIN to create a customer_contact table with all customers’ full name, address, city, zip code, 
+and country. Note that you need to create a new column for the full name and update its values
+from first name and last name. (Tip: Join country, city, and customer tables) */
+
+```
