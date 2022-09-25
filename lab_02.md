@@ -12,14 +12,32 @@ CREATE TABLE payment_bk AS
 SELECT * FROM payment 
 ```
 
+<br> Results in pgAdmin: <br>
+
+![Lab 2, Q1 Result](img/q1.png)
+
 <br> Lab 2, Q2: <br>
 
 ```sql
- -- For a holiday promotion, the store plans to give 5% refund to the rental payment that is greater than $5.00. Add a new refund column of money type to the payment table and update the column values according to this new promotion policy.
+/* For a holiday promotion, the store plans to give 5% refund to the rental payment that is greater than $5.00. 
+Add a new refund column of money type to the payment table and update the column values according to this
+new promotion policy.*/ 
+
  ALTER TABLE payment
  ADD COLUMN refund money;
 
  UPDATE payment
  SET refund = (0.05*amount)::money
  WHERE amount > 5.00
+```
+
+<br> Results in pgAdmin: <br>
+
+![Lab 2, Q2 Result](img/q2.png)
+
+<br> Lab 2, Q3: <br>
+
+```sql
+/* Create a new view using the updated payment table but with a new Boolean column is_refunded indicating if a refund is available. */
+
 ```
