@@ -45,4 +45,6 @@ FROM payment
 ORDER BY refund DESC;
 ```
 
+<br> Results in pgAdmin: <br>
+
 ![Lab 2, Q3 Result:](img/q3.png)
