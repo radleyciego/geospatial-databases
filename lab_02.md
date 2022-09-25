@@ -12,7 +12,7 @@ SELECT * FROM payment
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q1 Result](img/q1.png)
+![Lab 2, Q1 Result:](img/q1.png)
 
 <br> Lab 2, Q2: <br>
 
@@ -31,11 +31,18 @@ new promotion policy.*/
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q2 Result](img/q2.png)
+![Lab 2, Q2 Result:](img/q2.png)
 
 <br> Lab 2, Q3: <br>
 
 ```sql
-/* Create a new view using the updated payment table but with a new Boolean column is_refunded indicating if a refund is available. */
+/* Create a new view using the updated payment table but with a new Boolean column is_refunded 
+indicating if a refund is available. */
 
+CREATE VIEW payment_view AS 
+SELECT *, (refund::numeric)>0 AS is_refunded
+FROM payment
+ORDER BY refund DESC;
 ```
+
+![Lab 2, Q3 Result:](img/q3.png)
