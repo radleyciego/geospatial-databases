@@ -55,8 +55,22 @@ ORDER BY refund DESC;
 /* Use JOIN to create a customer_contact table with all customers’ full name, address, city, zip code, 
 and country. Note that you need to create a new column for the full name and update its values
 from first name and last name. (Tip: Join country, city, and customer tables) */
-CREATE TABLE customer_contact AS
-SELECT *
-FROM address a, customer c
-LEFT JOIN a.address_id, 
+CREATE TABLE customer_contact AS (
+SELECT cu.first_name  cu.last_name, address, city, postal_code, country
+FROM customer cu
+JOIN address a ON cu.address_id = a.address_id
+JOIN city ci ON a.city_id = ci.city_id
+JOIN country co ON ci.country_id = co.country_id);
+
+ALTER TABLE customer_contact
+ADD COLUMN full_name varchar(100);
+
+UPDATE customer_contact
+SET full_name = first_name || ' ' || last_name;
+
+ALTER TABLE customer_contact
+DROP COLUMN first_name,
+DROP COLUMN last_name;
 ```
+
+![Lab 2, Q4 Result:](img/q4.png)
