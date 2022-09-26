@@ -12,7 +12,7 @@ SELECT * FROM payment
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q1 Result:](img/q1.png)
+![Lab 2, Q1 Results:](img/q1.png)
 
 <br> Lab 2, Q2: <br>
 
@@ -31,7 +31,7 @@ new promotion policy.*/
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q2 Result:](img/q2.png)
+![Lab 2, Q2 Results:](img/q2.png)
 
 <br> Lab 2, Q3: <br>
 
@@ -47,7 +47,7 @@ ORDER BY refund DESC;
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q3 Result:](img/q3.png)
+![Lab 2, Q3 Results:](img/q3.png)
 
 <br>Lab 2, Q4: <br>
 
@@ -72,5 +72,21 @@ ALTER TABLE customer_contact
 DROP COLUMN first_name,
 DROP COLUMN last_name;
 ```
+<br> Results in pgAdmin: <br>
 
-![Lab 2, Q4 Result:](img/q4.png)
+![Lab 2, Q4 Results:](img/q4.png)
+
+<br> Lab 4, Q5: <br>
+
+``` sql
+/* Find the "10 Most Valuable Customers" who spent the most on the rentals. (Tips: need to join relevant tables, summarize the total for payments, and sort the results). */
+SELECT first_name, last_name, amount
+FROM customer cu
+JOIN payment p ON cu.customer_id = p.customer_id);
+GROUP BY first_name, last_name
+ORDER BY SUM(amount) DESC
+LIMIT 10
+```
+
+<br> Results on pgAdmin: <br>
+![Lab 2, Q5 Results:](img/q5.png)
