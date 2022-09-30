@@ -78,7 +78,7 @@ DROP COLUMN last_name;
 
 ![Lab 2, Q4 Results:](img/q4.png)
 
-<br> Lab 4, Q5: <br>
+<br> Lab 2, Q5: <br>
 
 ``` sql
 /* Find the "10 Most Valuable Customers" who spent the most on the rentals. (Tips: need to join relevant tables, summarize the total for payments, and sort the results). */
