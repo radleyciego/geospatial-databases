@@ -6,6 +6,7 @@
 
 ```sql
 -- Make a copy of the payment table using CREATE TABLE ... AS
+
 CREATE TABLE payment_bk AS
 SELECT * FROM payment 
 ```
@@ -55,6 +56,7 @@ ORDER BY refund DESC;
 /* Use JOIN to create a customer_contact table with all customers’ full name, address, city, zip code, 
 and country. Note that you need to create a new column for the full name and update its values
 from first name and last name. (Tip: Join country, city, and customer tables) */
+
 CREATE TABLE customer_contact AS (
 SELECT cu.first_name  cu.last_name, address, city, postal_code, country
 FROM customer cu
@@ -80,6 +82,7 @@ DROP COLUMN last_name;
 
 ``` sql
 /* Find the "10 Most Valuable Customers" who spent the most on the rentals. (Tips: need to join relevant tables, summarize the total for payments, and sort the results). */
+
 SELECT first_name, last_name, amount
 FROM customer cu
 JOIN payment p ON cu.customer_id = p.customer_id);
