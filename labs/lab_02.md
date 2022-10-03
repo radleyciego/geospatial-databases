@@ -13,7 +13,7 @@ SELECT * FROM payment
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q1 Results:](img/l2q1.png)
+![Lab 2, Q1 Results:](/img/l2q1.png)
 
 <br> Lab 2, Q2: <br>
 
@@ -32,7 +32,7 @@ new promotion policy.*/
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q2 Results:](img/l2q2.png)
+![Lab 2, Q2 Results:](/img/l2q2.png)
 
 <br> Lab 2, Q3: <br>
 
@@ -48,7 +48,7 @@ ORDER BY refund DESC;
 
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q3 Results:](img/l2q3.png)
+![Lab 2, Q3 Results:](/img/l2q3.png)
 
 <br>Lab 2, Q4: <br>
 
@@ -76,7 +76,7 @@ DROP COLUMN last_name;
 ```
 <br> Results in pgAdmin: <br>
 
-![Lab 2, Q4 Results:](img/l2q4.png)
+![Lab 2, Q4 Results:](/img/l2q4.png)
 
 <br> Lab 2, Q5: <br>
 
@@ -92,4 +92,4 @@ LIMIT 10
 ```
 
 <br> Results on pgAdmin: <br>
-![Lab 2, Q5 Results:](img/l2q5.png)
+![Lab 2, Q5 Results:](/img/l2q5.png)
