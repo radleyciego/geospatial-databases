@@ -11,6 +11,10 @@ FROM customer
 WHERE first_name = 'Kelly' OR first_name = 'Tony'
 ```
 
+<br> Results in pgAdmin: <br>
+
+![Lab 1, Q1 Results:](/img/l1q1.png)
+
 <br> Lab 1, Q2: <br>
 
 ```sql
@@ -19,6 +23,9 @@ SELECT *
 FROM film
 WHERE length > 120 
 ```
+<br> Results in pgAdmin: <br>
+
+![Lab 1, Q2 Results:](/img/l1q2.png)
 
 <br> Lab 1, Q3: <br>
 
@@ -28,6 +35,10 @@ WHERE length > 120
 SELECT * FROM public.film
 WHERE description LIKE '%Drama%' OR description LIKE '%Documentary%';
 ```
+
+<br> Results in pgAdmin: <br>
+
+![Lab 1, Q3 Results:](/img/l1q3.png)
 
 <br> Lab 1, Q4: <br> 
 
@@ -48,6 +59,10 @@ FROM film
 WHERE description LIKE '%Documentary%';
 ```
 
+<br> Results in pgAdmin: <br>
+
+![Lab 1, Q4](/img/l1q4.png)
+
 <br> Lab 1, Q5: <br>
 
 ```sql
@@ -64,3 +79,7 @@ SELECT last_name, COUNT(*) N FROM public.actor
 GROUP BY last_name
 ORDER BY n DESC;
 ```
+
+<br> Results in pgAdmin: <br>
+
+![Lab 1, Q5](/img/l1q5.png)
