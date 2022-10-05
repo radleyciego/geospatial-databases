@@ -19,8 +19,8 @@ ADD id serial PRIMARY KEY;
 CREATE EXTENSION postgis;
 
 ALTER TABLE restaurant
-ADD geog geography(POINT, 4326)
-ADD geom geometry(POINT, 4326);
+ADD geom geometry(POINT, 4326)
+ADD geog geography(POINT, 4326);
 ```
 
 <br> Results in pgAdmin: <br>
@@ -35,7 +35,7 @@ UPDATE restaurant
 SET geom = ST_SetSRID(ST_Point(lon,lat),4326);
 
 UPDATE restaurant
-SET geog = ST_SetSRID(ST_Point(lon,lat),4326);
+SET geog = ST_SetSRID(ST_Point(lon,lat),4326)::geography;
 ```
 <br> Results in pgAdmin: <br>
 
