@@ -49,3 +49,8 @@ SELECT name, ST_Transform(geom,4326),geom <-> 'SRID=4326;POINT(-73.963833 40.768
 FROM restaurant
 ORDER BY dist ASC limit 10;
 ```
+
+<br> Results in pgAdmin: </br>
+
+![Table](/img/l3q3.1.png)
+![Map](/img/l3q3.png)
