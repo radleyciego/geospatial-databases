@@ -2,7 +2,7 @@
 <br> Radley Ciego <br>
 <br> October 16, 2022 <br>
 <br> GTECH 78519: Geospatial Databases <br>
-<br> Lab 3, Q1: <br>
+<br> Lab 3, Q1: </br>
 
 ```sql
 -- Create a table and import data from restaurant CSV, include primary key
@@ -23,11 +23,11 @@ ADD geom geometry(POINT, 4326)
 ADD geog geography(POINT, 4326);
 ```
 
-<br> Results in pgAdmin: <br>
+<br> Results in pgAdmin: </br>
 
-![](img/)
+![Lab 3 Q1 results:](/img/l3q1.png)
 
-<br> Lab 3, Q2: <br>
+<br> Lab 3, Q2: </br>
 
 ``` sql
 -- Create spatial (geometry and geography) data from coordinates
@@ -37,11 +37,11 @@ SET geom = ST_SetSRID(ST_Point(lon,lat),4326);
 UPDATE restaurant
 SET geog = ST_SetSRID(ST_Point(lon,lat),4326)::geography;
 ```
-<br> Results in pgAdmin: <br>
+<br> Results in pgAdmin: </br>
 
-![](img/)
+![Lab 3 Q2 results:](/img/l3q2.png)
 
-<br> Lab 3, Q3: <br>
+<br> Lab 3, Q3: </br>
 
 ```sql
 -- Write SQL statements to find out the 10 restaurants closest to Hunter College main campus at 69th Street
@@ -52,5 +52,5 @@ ORDER BY dist ASC limit 10;
 
 <br> Results in pgAdmin: </br>
 
-![Table](/img/l3q3.1.png)
-![Map](/img/l3q3.png)
+![Lab 3 Q3 results:](/img/l3q3.1.png)
+![Lab 3 Q3 results:](/img/l3q3.png)
