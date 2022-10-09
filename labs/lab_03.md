@@ -45,7 +45,7 @@ SET geog = ST_SetSRID(ST_Point(lon,lat),4326)::geography;
 
 ```sql
 -- Write SQL statements to find out the 10 restaurants closest to Hunter College main campus at 69th Street
-
-
+SELECT name, ST_Transform(geom,4326),geom <-> 'SRID=4326;POINT(-73.963833 40.768444)'::geometry AS dist
+FROM restaurant
+ORDER BY dist ASC limit 10;
 ```
-
