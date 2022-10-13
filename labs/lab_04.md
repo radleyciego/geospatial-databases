@@ -1,4 +1,4 @@
-# Lab 03: PostGIS and Spatial Data Types
+# Lab 04: PostGIS and Basic Spatial Data Manipulation
 <br> Radley Ciego </br>
 <br> October 17, 2022 </br>
 <br> GTECH 78519: Geospatial Databases </br>
@@ -17,3 +17,6 @@
 | 2831            | SPCS Long Island              | NAD83 HARN | Meter         | Lambert    | New York/Long Island     |
 | 3627            | NAD83(NSRS2007) / New York Long Island | NAD83 (2007) | Feet  | Lambert | New York/Long Island     |
 | 3628            | NAD83(NSRS2007) / New York Long Island | NAD83 (2007) | Feet | Lambert  | New York/Long Island     |
+
+<br> Results in pg Admin: </br>
+![L4 Q1 result:](/img/l4q1.png)
