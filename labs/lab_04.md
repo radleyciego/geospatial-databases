@@ -19,16 +19,20 @@
 | 3628            | NAD83(NSRS2007) / New York Long Island | NAD83 (2007) | Feet | Lambert  | New York/Long Island     |
 
 ```sql
+-- Use SQL SELECT to show that all SRIDs are in the spatial_ref_systems
 SELECT * FROM spatial_ref_sys
 ORDER BY srid ASC
 ```
-
 <br> Results in pg Admin: </br>
 
 ![L4 Q1 result:](/img/l4q1.png)
 
 <br> Lab 4, Q2: </br>
 
-```sql
+```
+cd /Users/radleyciego
+```
 
+```sql
+-- Spatial selection using fields and spatial reference transformation
 ```
