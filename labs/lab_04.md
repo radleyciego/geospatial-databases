@@ -29,10 +29,6 @@ ORDER BY srid ASC
 
 <br> Lab 4, Q2: </br>
 
-``` sql
--- Import the US County data in PostGIS
-```
-
 ```
 cd /Users/radleyciego/GitHub/geospatial-databases/data/cb_2020_us_county_500k
 shp2pgsql -s 4326 cb_2020_us_county_500k.shp public.counties | psql -h localhost -**** -d learnsql -U ****  
