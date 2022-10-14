@@ -39,3 +39,16 @@ shp2pgsql -s 4326 cb_2020_us_county_500k.shp public.counties | psql -h localhost
 SELECT ST_SRID(geom) FROM counties
 ```
 
+```sql
+-- Select all New York State counties into a new table using CREATE TABLE ... AS
+CREATE TABLE nys_counties AS
+SELECT * FROM counties
+WHERE "stusps" = 'NY'
+
+-- Create a geometry column for the NYS_counties table
+ALTER TABLE nys_counties
+ADD COLUMN geom_1 geometry
+
+-- 
+```
+
