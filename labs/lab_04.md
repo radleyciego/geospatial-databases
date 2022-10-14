@@ -38,3 +38,4 @@ shp2pgsql -s 4326 cb_2020_us_county_500k.shp public.counties | psql -h localhost
 -- Check the SRID of the country geometry column. If necessary, update the columd's SRID to an appropriate one
 SELECT ST_SRID(geom) FROM counties
 ```
+
