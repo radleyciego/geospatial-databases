@@ -36,7 +36,7 @@ shp2pgsql -s 4326 cb_2020_us_county_500k.shp public.counties | psql -h localhost
 
 ```sql
 -- Check the SRID of the country geometry column. If necessary, update the columd's SRID to an appropriate one
-SELECT ST_SRID(geom) FROM counties
+SELECT Find_SRID('public','counties' 'geom')
 ```
 
 ```sql
@@ -50,5 +50,12 @@ ALTER TABLE nys_counties
 ADD COLUMN geom_1 geometry
 
 -- 
+
+UPDATE nys_counties
+SET geom_1 = ST_transform(geom, 32618);
+
+-- 
+SELECT ST_Transform(geom_1, 4326) as geom_2
+FROM nys_counties;
 ```
 
