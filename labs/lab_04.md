@@ -45,17 +45,23 @@ CREATE TABLE nys_counties AS
 SELECT * FROM counties
 WHERE "stusps" = 'NY'
 
--- Create a geometry column for the NYS_counties table
+-- Create a geometry column for the NYS_counties table with UTM 18N
 ALTER TABLE nys_counties
-ADD COLUMN geom_1 geometry
+ADD COLUMN geom_3748 geometry(MULTIPOLYGON, 3748)
 
--- Populate geom column
+-- Populate geom_3748 column by transforming geom column to SRID 3748
 UPDATE nys_counties
-SET geom_1 = ST_transform(geom, 32618);
+SET geom_3748 = ST_transform(geom, 3748);
 
 -- Verify geoemtry by transforming to 4326
 SELECT ST_Transform(geom_1, 4326) as geom_2
 FROM nys_counties;
+
+-- Create spatial index
+CREATE INDEX idx_3748_geom
+ON public.nys_counties USING gist
+(geom_3748)
+TABLESPACE pg_default;
 ```
 <br> Results from pgAdmin: </br>
-![Lab 4 q2 results:](/img/l4q2.png)
+![Lab 4 q2 results:](/img/l4q2.1.png)
