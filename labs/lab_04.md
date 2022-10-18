@@ -49,13 +49,13 @@ WHERE "stusps" = 'NY'
 ALTER TABLE nys_counties
 ADD COLUMN geom_1 geometry
 
--- 
-
+-- Populate geom column
 UPDATE nys_counties
 SET geom_1 = ST_transform(geom, 32618);
 
--- 
+-- Verify geoemtry by transforming to 4326
 SELECT ST_Transform(geom_1, 4326) as geom_2
 FROM nys_counties;
 ```
-
+<br> Results from pgAdmin: </br>
+![Lab 4 q2 results:](/img/l4q2.png)
