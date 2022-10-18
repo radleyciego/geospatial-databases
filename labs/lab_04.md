@@ -64,4 +64,6 @@ ON public.nys_counties USING gist
 TABLESPACE pg_default;
 ```
 <br> Results from pgAdmin: </br>
+
+![Lab 4 q2 results:](/img/l1q2.2.png)
 ![Lab 4 q2 results:](/img/l4q2.1.png)
