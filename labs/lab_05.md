@@ -26,7 +26,7 @@ shp2pgsql -s 3748 MapPLUTO.shp public.nycPLUTO | ./psql -h localhost -**** -d le
 CREATE TABLE mapPLUTO_buildings AS
 SELECT gid, zipcode, ownertype, yearbuilt, assesstot, geom FROM mapPLUTO;
 
-SELECT UpdateGeometrySRID('public','mappluto_buldings','geom',2831);
+SELECT UpdateGeometrySRID('public','mappluto_buildings','geom',2831);
 
 SELECT ST_transform(geom,4326)
 FROM mappluto_buldings
@@ -58,3 +58,29 @@ LIMIT 100;
 <br> Results in pgAdmin: </br>
 ![L5 Q2 results:](/img/l5q2.png)
 ![LB Q2 results:](/img/l5q2.1.png)
+
+``` sql
+-- Check, create, or update the spatial indexes on the geoemtry columns in the table
+CREATE INDEX mappluto_idx
+ON mappluto
+USING GIST (geom);
+
+CREATE INDEX nys_idx
+ON nys_counties
+USING GIST (geom);
+
+SELECT *
+FROM mappluto
+WHERE NOT ST_IsSimple(geom) OR NOT ST_IsValid(geom);
+
+SELECT *
+FROM nys_counties
+WHERE NOT ST_IsSimple(geom) OR NOT ST_IsValid(geom);
+```
+<br> Results in pgAdmin: </br>
+![L5 Q3 results:](/img/l5q3.png)
+![L5 Q3 results:](/img/l5q3.1.png)
+
+``` sql
+
+```
