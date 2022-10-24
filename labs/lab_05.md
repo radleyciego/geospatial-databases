@@ -123,7 +123,7 @@ WHERE zipcode > 0
 GROUP BY zipcode
 
 -- Simpliy the NYS county boundaries without preserving topology
-SELECT ST_Simplify(geom, 0)
+SELECT ST_Simplify(geom, 0.01)
 FROM nys_counties
 ```
 
