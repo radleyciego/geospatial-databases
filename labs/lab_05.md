@@ -39,7 +39,6 @@ CREATE TABLE bronx_mapPLUTO AS
 SELECT gid, zipcode, ownertype, yearbuilt, assesstot, geom FROM mapPLUTO
 WHERE "borough" = 'BX';
 ```
-
       
 ``` sql
 -- Check the spatial reference system for NYS_counties and mapPLUTO tables
@@ -83,8 +82,8 @@ FROM mappluto
 LIMIT 100;
 ```
 <br> Results in pgAdmin: </br>
-![L5 Q3 results:](/img/l5q3.png)
-![L5 Q3 results:](/img/l5q3.1.png)
+![L5 Q2 results:](/img/l5q3.png)
+![L5 Q2 results:](/img/l5q3.1.png)
 
 <br> Lab 5, Q3: </br>
 
@@ -110,4 +109,27 @@ SELECT zipcode, ROUND(AVG(assesstot))
 FROM mappluto
 WHERE zipcode > 0
 GROUP BY zipcode
+
+-- Calculate the mode of property ages by zipcode
+SELECT zipcode, mode() WITHIN GROUP (ORDER BY 2022-yearbuilt) AS age_mode
+FROM mappluto
+WHERE zipcode > 0
+GROUP BY zipcode;
+
+-- Calculate the median property sizxe and median age by zipcode in mappluto
+SELECT zipcode, percentile_disc(0.5) WITHIN GROUP (order by 2022-yearbuilt) AS median
+FROM mappluto
+WHERE zipcode > 0
+GROUP BY zipcode
+
+-- Simpliy the NYS county boundaries without preserving topology
+SELECT ST_Simplify(geom, 0)
+FROM nys_counties
 ```
+
+<br> Results in pgAdmin: </br>
+![L5 Q3 Results](/img/l5q3.png)
+![L5 Q3.1 Results](/img/l5q3.1.png)
+![L5 Q3.2 Results](/img/l5q3.2.png)
+![L5 Q3.3 Results](/img/l5q3.3.png)
+![L5 Q3.4 Results](/img/l5q3.4.png)
