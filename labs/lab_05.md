@@ -40,6 +40,7 @@ SELECT gid, zipcode, ownertype, yearbuilt, assesstot, geom FROM mapPLUTO
 WHERE "borough" = 'BX';
 ```
 
+      
 ``` sql
 -- Check the spatial reference system for NYS_counties and mapPLUTO tables
 SELECT Find_SRID('public','nys_counties','geom');
@@ -76,11 +77,32 @@ WHERE NOT ST_IsSimple(geom) OR NOT ST_IsValid(geom);
 SELECT *
 FROM nys_counties
 WHERE NOT ST_IsSimple(geom) OR NOT ST_IsValid(geom);
+
+SELECT gid, yearbuilt
+FROM mappluto
+LIMIT 100;
 ```
 <br> Results in pgAdmin: </br>
 ![L5 Q3 results:](/img/l5q3.png)
 ![L5 Q3 results:](/img/l5q3.1.png)
 
-``` sql
+<br> Lab 5, Q3: </br>
 
+``` sql
+-- Calculate the area, perimeter, and age of each property
+SELECT ST_Area(geom) sqft
+FROM mappluto
+
+SELECT ST_Perimeter(geom) perimeter
+FROM mappluto
+
+SELECT gid, yearbuilt, (2022-yearbuilt) as age
+FROM mappluto
+WHERE yearbuilt > 0;
+
+-- Calculate the mean size and mean assessed total values by zipcode
+SELECT zipcode, ROUND(AVG(assesstot))
+FROM mappluto
+WHERE zipcode > 0
+GROUP BY zipcode
 ```
