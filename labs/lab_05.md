@@ -101,6 +101,11 @@ FROM mappluto
 WHERE yearbuilt > 0;
 
 -- Calculate the mean size and mean assessed total values by zipcode
+SELECT zipcode, ROUND(AVG(ST_Area(geom))) AS avg
+FROM mappluto
+WHERE zipcode > 0
+GROUP BY zipcode
+
 SELECT zipcode, ROUND(AVG(assesstot))
 FROM mappluto
 WHERE zipcode > 0
