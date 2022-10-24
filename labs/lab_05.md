@@ -56,8 +56,8 @@ FROM mapPLUTO
 LIMIT 100;
 ```
 <br> Results in pgAdmin: </br>
-![L5 Q2 results:](/img/l5q2.png)
-![LB Q2 results:](/img/l5q2.1.png)
+![L5 Q2 results:](/img/l5q1.png)
+![LB Q2 results:](/img/l5q1.1.png)
 
 ``` sql
 -- Check, create, or update the spatial indexes on the geoemtry columns in the table
@@ -82,8 +82,8 @@ FROM mappluto
 LIMIT 100;
 ```
 <br> Results in pgAdmin: </br>
-![L5 Q2 results:](/img/l5q3.png)
-![L5 Q2 results:](/img/l5q3.1.png)
+![L5 Q2 results:](/img/l5q2.png)
+![L5 Q2 results:](/img/l5q2.1.png)
 
 <br> Lab 5, Q3: </br>
 
