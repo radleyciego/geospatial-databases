@@ -55,6 +55,6 @@ SELECT ST_Transform(geom,4326)
 FROM mapPLUTO
 LIMIT 100;
 ```
-
+<br> Results in pgAdmin: </br>
 ![L5 Q2 results:](/img/l5q2.png)
 ![LB Q2 results:](/img/l5q2.1.png)
