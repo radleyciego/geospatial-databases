@@ -23,7 +23,19 @@ shp2pgsql -s 3748 MapPLUTO.shp public.nycPLUTO | ./psql -h localhost -**** -d le
 
 ``` sql
 -- Create a separate MapPLUTO table for NYC with the columns for id, zipcode, ownertype, yearbuilt, assesstot, and geometry in State Plane Long Island reference system
-
-CREATE TABLE mapPLUTO_buldings AS
+CREATE TABLE mapPLUTO_buildings AS
 SELECT gid, zipcode, ownertype, yearbuilt, assesstot, geom FROM mapPLUTO
+
+SELECT UpdateGeometrySRID('public','mappluto_buldings','geom',2831);
+
+SELECT ST_transform(geom,4326)
+FROM mappluto_buldings
+LIMIT 100;
+```
+
+``` sql
+-- Make a separarate MapPLUTO table for one borough with the above columns
+CREATE TABLE bronx_mapPLUTO AS
+SELECT gid, zipcode, ownertype, yearbuilt, assesstot, geom FROM mapPLUTO
+WHERE "borough" = 'BX'
 ```
