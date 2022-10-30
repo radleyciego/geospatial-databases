@@ -15,8 +15,20 @@ WHERE statefp = '36';
 SELECT Find_SRID('public','counties','geom');
 SELECT Find_SRID('public','restaurant_geom_geog', 'geom');
 
--- Set_SRID()
 SELECT geom, ST_AsEWKT(geom)
-FROM restaurant_geom_geog
-```
+FROM restaurant_geom_geog;
 
+WITH nys_cnty AS (
+    SELECT *
+    FROM counties
+    WHERE statefp = '36'
+)
+SELECT r.*
+FROM restaurant_geom_geog AS r, nys_cnty AS nys
+WHERE ST_Within(r.geom, nys.geom);
+
+SELECT r.*, nys.countyfp, nys.name
+FROM restaurant_geom_geog AS r
+JOIN nys_cnty_v AS nys
+ON ST_Contains(nys.geom, r.geom);
+```
