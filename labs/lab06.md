@@ -32,3 +32,6 @@ FROM restaurant_geom_geog AS r
 JOIN nys_cnty_v AS nys
 ON ST_Contains(nys.geom, r.geom);
 ```
+
+<br> Results in pgAdmin: </br>
+![L6, Q1 results](/img/l6q1.png)
