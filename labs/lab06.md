@@ -5,7 +5,8 @@
 <br> Lab 6, Q1: </br>
 
 ``` sql
--- Use spatial queries to create a table that contains all restaurants in New York. The table sould contain county FIPS code and county name where the restaurant is located
+/* Use spatial queries to create a table that contains all restaurants in New York. 
+The table sould contain county FIPS code and county name where the restaurant is located */
 
 CREATE VIEW nys_cnty_v AS
 SELECT *
@@ -31,7 +32,22 @@ SELECT r.*, nys.countyfp, nys.name
 FROM restaurant_geom_geog AS r
 JOIN nys_cnty_v AS nys
 ON ST_Contains(nys.geom, r.geom);
+
+/* Run spatial query to create a table showing NYS county names, FIP code, 
+the total number of restaurants in each county, the total number of McDonalds,
+the total number of Pizza Huts, and the brand that has the most stores in each county */
+
 ```
 
 <br> Results in pgAdmin: </br>
 ![L6, Q1 results](/img/l6q1.png)
+
+<br> Lb 6, Q2: </br>
+
+``` sql
+
+-- Query the total number of restaueants within 200, 500, and 1000 mters from each McDonald's restaurant
+
+/* Query the total number of parcels and their average assessed values in the MapPLUTO dataset within
+1000, 2000, and 5000 feet from each restaurant */
+```
