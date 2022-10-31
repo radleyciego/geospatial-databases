@@ -33,10 +33,16 @@ FROM restaurant_geom_geog AS r
 JOIN nys_cnty_v AS nys
 ON ST_Contains(nys.geom, r.geom);
 
-/* Run spatial query to create a table showing NYS county names, FIP code, 
+/* Run spatial query to create a table showing NYS county names, FIP codes, 
 the total number of restaurants in each county, the total number of McDonalds,
 the total number of Pizza Huts, and the brand that has the most stores in each county */
 
+SELECT nys.countyfp, nys.name, count(*) AS numrst
+FROM nys_cnty_v AS nys
+JOIN restaurant_geom_geog AS r
+ON ST_Contains(nys.geom, r.geom)
+GROUP BY nys.countyfp, nys.name
+ORDER BY numrst DESC;
 ```
 
 <br> Results in pgAdmin: </br>
