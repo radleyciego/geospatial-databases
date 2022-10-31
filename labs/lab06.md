@@ -132,7 +132,8 @@ LEFT JOIN nys_rst_500 r3
 ON r3.id=r.id
 LEFT JOIN nys_rst_1000 r5
 ON r5.id=r.id;
+```
 
 <br> Results in pgAdmin: </br>
-![Lab 6, Q2](/img/l6q2.png)
+![L6, Q2 Results](/img/l6q2.png)
 ```
