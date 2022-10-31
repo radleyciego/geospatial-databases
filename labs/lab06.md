@@ -37,7 +37,7 @@ ON ST_Contains(nys.geom, r.geom);
 the total number of restaurants in each county, the total number of McDonalds,
 the total number of Pizza Huts, and the brand that has the most stores in each county */
 
-SELECT nys.countyfp, nys.name, count(*) AS numrst
+SELECT nys.countyfp, nys.name, COUNT(*) AS numrst, COUNT(CASE r.name WHEN 'MCD' THEN 1 ELSE NULL END) AS nummcd, COUNT(CASE r.name WHEN 'PZH' THEN 1 ELSE NULL END) AS numpzh
 FROM nys_cnty_v AS nys
 JOIN restaurant_geom_geog AS r
 ON ST_Contains(nys.geom, r.geom)
@@ -47,6 +47,7 @@ ORDER BY numrst DESC;
 
 <br> Results in pgAdmin: </br>
 ![L6, Q1 results](/img/l6q1.png)
+![L6, Q1 results](/img/l6q1.1.png)
 
 <br> Lb 6, Q2: </br>
 
