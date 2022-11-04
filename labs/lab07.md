@@ -18,7 +18,7 @@ SET assesstot = pluto.avgval
 FROM pluto
 WHERE (p.assesstot IS NULL OR p.assesstot < 1000) AND p.gid = pluto.gid;
 
-SELECT p.gid, p.borough, p.block, p.lot, p.address, ROUND(p.assesstot)::money AS assessedvalue, p.geom
+SELECT p.gid, p.borough, p.block, p.lot, p.address, p.assesstot::money AS assessedvalue, p.geom
 FROM public.mappluto AS p
 ORDER BY assesstot ASC;
 ```
