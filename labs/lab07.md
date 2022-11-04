@@ -6,8 +6,24 @@
 
 ```sql
 -- update missing and exceptional mapPLUTO assessed values with spatial average
+WITH pluto AS (
+	SELECT p.gid AS gid, AVG(p1.assesstot) AS avgval
+	FROM public.mappluto AS p        
+	JOIN public.mappluto AS p1
+	ON ST_DWithin(p.geom, p1.geom, 800 * 0.3048) -- convert 800 feet to meters
+	WHERE p.assesstot IS NULL OR p.assesstot < 1000 
+	GROUP BY p.gid)
+UPDATE public.mappluto AS p
+SET assesstot = pluto.avgval
+FROM pluto
+WHERE (p.assesstot IS NULL OR p.assesstot < 1000) AND p.gid = pluto.gid;
 
+SELECT , p.assesstot, p.geom
+FROM public.mappluto AS p
+ORDER BY p.assesstot ASC
 ```
+<br> Results in pgAdmin: </br>
+![Lab 7, Q1 results:](/)
 
 ```sql
 -- find the closest 5 restaurants to each subway station. Include restaurant name and distance to station
