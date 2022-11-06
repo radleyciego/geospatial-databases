@@ -27,6 +27,14 @@ ORDER BY assesstot ASC;
 
 ```sql
 -- find the closest 5 restaurants to each subway station. Include restaurant name and distance to station
-SELECT r.name, ROUND(ST_Distance(r.geom, s.geom))
-FROM restaurant_geom_geog AS r, mtastations AS s;
+SELECT s1.name, r.name AS n_closest_restaurant
+FROM
+	restaurant_geom_geog AS r
+	CROSS JOIN LATERAL
+	(
+		SELECT name, id, geom
+		FROM mtastations AS s
+		ORDER BY r.geom <-> s.geom
+		LIMIT 5
+) AS s1;
 ```
