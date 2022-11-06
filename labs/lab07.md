@@ -14,7 +14,7 @@ WITH pluto AS (
 	WHERE p.assesstot IS NULL OR p.assesstot < 1000 
 	GROUP BY p.gid)
 UPDATE public.mappluto AS p
-SET assesstot = pluto.avgval
+![SET assesstot = pluto.avgval
 FROM pluto
 WHERE (p.assesstot IS NULL OR p.assesstot < 1000) AND p.gid = pluto.gid;
 
@@ -27,14 +27,17 @@ ORDER BY assesstot ASC;
 
 ```sql
 -- find the closest 5 restaurants to each subway station. Include restaurant name and distance to station
-SELECT s1.name, r.name AS n_closest_restaurant
+SELECT s.name, r1.name AS n_closest_restaurant
 FROM
-	restaurant_geom_geog AS r
+	mtastations AS s
 	CROSS JOIN LATERAL
 	(
 		SELECT name, id, geom
-		FROM mtastations AS s
-		ORDER BY r.geom <-> s.geom
+		FROM restaurant_geom_geog AS r
+		ORDER BY s.geom <-> r.geom
 		LIMIT 5
-) AS s1;
+) AS r1;
 ```
+
+<br> Results in pgAdmin: </br>
+![Lab 7, q2 results:](/img/l7q2.png)
