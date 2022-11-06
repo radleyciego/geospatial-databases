@@ -14,7 +14,7 @@ WITH pluto AS (
 	WHERE p.assesstot IS NULL OR p.assesstot < 1000 
 	GROUP BY p.gid)
 UPDATE public.mappluto AS p
-![SET assesstot = pluto.avgval
+SET assesstot = pluto.avgval
 FROM pluto
 WHERE (p.assesstot IS NULL OR p.assesstot < 1000) AND p.gid = pluto.gid;
 
