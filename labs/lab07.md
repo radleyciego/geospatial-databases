@@ -6,6 +6,11 @@
 
 ```sql
 -- update missing and exceptional mapPLUTO assessed values with spatial average
+
+CREATE INDEX mappluto_idx
+ON mappluto
+USING GIST (geom);
+
 WITH pluto AS (
 	SELECT p.gid AS gid, AVG(p1.assesstot) AS avgval
 	FROM public.mappluto AS p        
@@ -27,6 +32,11 @@ ORDER BY assesstot ASC;
 
 ```sql
 -- find the closest 5 restaurants to each subway station. Include restaurant name and distance to station
+
+CREATE INDEX subway_idx
+ON mtastations
+USING GIST (geom);
+
 SELECT s.name, r1.name AS n_closest_restaurant
 FROM
 	mtastations AS s
