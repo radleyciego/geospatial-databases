@@ -5,5 +5,6 @@
  <br> [Lab 3: PostGIS and Spatial Data Types](/labs/lab_03.md) </br>
  <br> [Lab 4: PostGIS and Basic Spatial Data Manipulation](/labs/lab_04.md) </br>
  <br> [Lab 5: Spatial Functions in PostGIS](/labs/lab_05.md) </br>
- <br> [Lab 6: Spatial Queries in PostGIS](/labs/lab06.md) </br>
- <br> [Lab 7: Update and Proximity with PostGIS](/labs/lab07.md) </br>
+ <br> [Lab 6: Spatial Queries in PostGIS](/labs/lab_06.md) </br>
+ <br> [Lab 7: Update and Proximity with PostGIS](/labs/lab_07.md) </br>
+ <br> [Lab 8: Desktop GIS and Spatial Databases]() </br>
