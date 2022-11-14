@@ -6,8 +6,60 @@
 
 ```sql
 -- import, clean and process brooklyn acs educational attainment data
+```
 
 ```
+import pandas as pd
+from sqlalchemy import create_engine
+
+# read educational attainment csv
+bk_acs = pd.read_csv('/Users/radleyciego/GitHub/geospatial-databases/data/Kings_Education_Attainment_ACS_17_5YR_B15003/ACS_17_5YR_B15003.csv')
+
+# change columns to lowercase
+bk_acs = bk_acs.rename(columns=str.lower)
+
+# export dataframe to postgres
+engine = create_engine('postgresql://radleyciego:Spot28@localhost:1841/learnsql')
+bk_acs.to_sql('bk_acs_5y', engine)
+```
+
+```sql
+CREATE TABLE bk_bg AS (
+	SELECT * FROM blockgroips
+	WHERE "statefp"=047);
+
+ALTER TABLE bk_bg
+ADD COLUMN geom3748 geometry(MULTIPOLYGON, 3748);
+
+SELECT Find_SRID('public','bk_bg','geom');
+
+UPDATE bk_bg
+SET geom3748 ST_Transform(geom, 3748)
+
+SELECT ST_Transform(geom, 4326) as geom_2
+FROM bk_bg;
+
+CREATE INDEX idx_geom
+ON public.bk_bg USING gist
+(geom3748)
+TABLESPACE pg_default;
+
+CREATE TABLE bk_acs_counties_join AS 
+	(SELECT bk_acs_5y_edu.*, bk_counties.*
+	FROM bk_counties
+	CROSS JOIN bk_acs_5y_edu);
+
+ALTER TABLE bk_bg ADD geoid2 bigint;
+
+UPDATE bk_bg SET geoid2 = CAST(geoid AS bigint)
+
+ALTER TABLE bk_bg
+DROP COLUMN geoid;
+```
+
+<br> Results in pgAdmin: </br>
+![Lab8,q1 Results:](/img/l8q1.png)
+![Lab8,q1 Results:](/img/l8q1.1.png)
 
 <br> Lab 8, Q2: </br>
 
