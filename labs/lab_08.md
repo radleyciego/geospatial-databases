@@ -5,7 +5,7 @@
 <br> Lab 8, Q1: </br>
 
 ```sql
--- import, clean and process brooklyn acs educational attainment data
+-- import, clean and process brooklyn acs educational attainment and block group data
 ```
 
 ```
@@ -44,17 +44,19 @@ ON public.bk_bg USING gist
 (geom3748)
 TABLESPACE pg_default;
 
-CREATE TABLE bk_acs_counties_join AS 
-	(SELECT bk_acs_5y_edu.*, bk_counties.*
-	FROM bk_counties
-	CROSS JOIN bk_acs_5y_edu);
-
 ALTER TABLE bk_bg ADD geoid2 bigint;
 
 UPDATE bk_bg SET geoid2 = CAST(geoid AS bigint)
 
 ALTER TABLE bk_bg
 DROP COLUMN geoid;
+
+-- join Brooklyn acs and block group data by geoid
+CREATE TABLE bk_acs_bg_join AS 
+	(SELECT *
+	FROM bk_acs_5y_edu 
+	JOIN bk_bg
+	ON bk_acs_5y_edu."geo.id2" = bk_bg.geoid2;);
 ```
 
 <br> Results in pgAdmin: </br>
