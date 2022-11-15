@@ -76,12 +76,53 @@ WITH bg AS
 		SELECT *, ST_Transform(geom, 2263) AS geomft
 		FROM bk_acs_bg_join
 ), sub_buf AS(
-		SELECT *, ST_Buffer(ST_Transform(geom, 2263),500) as geombuf
+		SELECT *, ST_Buffer(ST_Transform(geom, 2263),200) as geombuf
 		FROM mtastations)
 SELECT b.*, ROUND(bg.bachelor/bg.totalpop::double precision*100) AS perc_bachelor, ROUND(bg.masters/bg.totalpop::double precision*100) AS perc_masters, ROUND(bg.professional/bg.totalpop::double precision*100) AS perc_professional, ROUND(bg.doctorate/bg.totalpop::double precision*100) AS perc_doctorate 
 FROM sub_buf AS b
 JOIN mht
 ON ST_Intersects(b.geombuf,bg.geomft);
+
+CREATE TABLE bg_acs_200 AS 
+(WITH bg AS
+(
+		SELECT *, ST_Transform(geom, 2263) AS geomft
+		FROM bk_acs_bg_join
+), sub_buf AS(
+		SELECT *, ST_Buffer(ST_Transform(geom, 2263),200) as geombuf
+		FROM mtastations)
+SELECT b.*, ROUND(bg.bachelor/bg.totalpop::double precision*100) AS perc_bachelor, ROUND(bg.masters/bg.totalpop::double precision*100) AS perc_masters, ROUND(bg.professional/bg.totalpop::double precision*100) AS perc_professional, ROUND(bg.doctorate/bg.totalpop::double precision*100) AS perc_doctorate 
+FROM sub_buf AS b
+JOIN bg
+ON ST_Intersects(b.geombuf,bg.geomft));
+
+CREATE TABLE bg_acs_500 AS 
+(WITH bg AS
+(
+		SELECT *, ST_Transform(geom, 2263) AS geomft
+		FROM bk_acs_bg_join
+), sub_buf AS(
+		SELECT *, ST_Buffer(ST_Transform(geom, 2263),500) as geombuf
+		FROM mtastations)
+SELECT b.*, ROUND(bg.bachelor/bg.totalpop::double precision*100) AS perc_bachelor, ROUND(bg.masters/bg.totalpop::double precision*100) AS perc_masters, ROUND(bg.professional/bg.totalpop::double precision*100) AS perc_professional, ROUND(bg.doctorate/bg.totalpop::double precision*100) AS perc_doctorate 
+FROM sub_buf AS b
+JOIN bg
+ON ST_Intersects(b.geombuf,bg.geomft));
+
+-- add id column to join tables
+ALTER TABLE bg_acs_200 
+ADD COLUMN id serial PRIMARY KEY;
+
+ALTER TABLE bg_acs_500 
+ADD COLUMN id serial PRIMARY KEY;
+
+CREATE TABLE join_200_500 AS
+SELECT m.line, m.name, b2.perc_bachelor_200, b5.perc_bachelor_500, b2.perc_masters_200, b5.perc_masters_500, b2.perc_professional_200, b5.perc_professional_500, b2.perc_doctorate_200, b5.perc_doctorate_500
+FROM mtastations AS m
+LEFT JOIN bg_acs_200 b2
+ON m.gid=b2.id
+LEFT JOIN bg_acs_500 b5
+ON b5.id=m.gid
 ```
 
 <br> Results in pgAdmin: </br>
