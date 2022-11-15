@@ -71,15 +71,19 @@ CREATE TABLE bk_acs_5y_edu AS (
 	SELECT hd01_vd01 AS totalpop, hd01_vd22 AS bachelor, hd01_vd23 AS masters, hd01_vd24 AS professional, hd01_vd25 AS doctorate
 	FROM bk_acs_5y);
 
-WITH mht AS
+WITH bg AS
 (
 		SELECT *, ST_Transform(geom, 2263) AS geomft
 		FROM bk_acs_bg_join
 ), sub_buf AS(
-		SELECT *, ST_Buffer(ST_Transform(geom, 2263),200) as geombuf
+		SELECT *, ST_Buffer(ST_Transform(geom, 2263),500) as geombuf
 		FROM mtastations)
-SELECT b.*, mht.bachelor/mht.totalpop
+SELECT b.*, ROUND(bg.bachelor/bg.totalpop::double precision*100) AS perc_bachelor, ROUND(bg.masters/bg.totalpop::double precision*100) AS perc_masters, ROUND(bg.professional/bg.totalpop::double precision*100) AS perc_professional, ROUND(bg.doctorate/bg.totalpop::double precision*100) AS perc_doctorate 
 FROM sub_buf AS b
 JOIN mht
-ON ST_Intersects(b.geombuf,mht.geomft);
+ON ST_Intersects(b.geombuf,bg.geomft);
 ```
+
+<br> Results in pgAdmin: </br>
+![Lab8, Q2 results:](/img/l8q2.png)
+![Lab 8 Q2 resutls:](/img/l8q2.1.png)
