@@ -11,7 +11,8 @@ shp2pgsql -s 4326 geo_export_efa04990-1f75-412c-996b-a2a5ac6c4534.shp public.mta
 ```
 
 ![Subway stations](/img/f2.png)
-![Subway lines](/img/f1.png)
+![Subway lines](/img/f4.png)
+![Census tracts](/img/f3.png)
 
 ```sql
 -- query NY census tract data, create NYC table
