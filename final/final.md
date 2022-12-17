@@ -22,3 +22,4 @@ WHERE (countyfp = '005' OR countyfp = '081' OR countyfp = '047' OR countyfp = '0
 AND (aland != '0'));
 ```
 
+![NYC Census Tracts](/img/f1.png)
