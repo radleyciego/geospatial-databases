@@ -23,3 +23,28 @@ AND (aland != '0'));
 ```
 
 ![NYC Census Tracts](/img/f1.png)
+
+```sql
+-- Check the spatial reference systems for tables
+ALTER TABLE nyctracts
+ADD COLUMN geom_3748 geometry(MULTIPOLYGON, 3748);
+
+UPDATE nyctracts
+SET geom_3748=ST_Transform(geom, 3748);
+
+ALTER TABLE subway
+ADD COLUMN geom_3748 geometry(MULTILINESTRING, 3748);
+
+UPDATE subway
+SET geom_3748=ST_Transform(geom, 3748);
+
+ALTER TABLE mtastations
+ADD COLUMN geom_3748 geometry(POINT, 3748);
+
+UPDATE mtastations
+SET geom_3748=ST_Transform(geom, 3748);
+```
+
+![](/img/f6.png)
+![](/img/f7.png)
+![](/img/f8.png)
