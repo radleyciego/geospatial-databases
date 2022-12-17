@@ -8,3 +8,4 @@
  <br> [Lab 6: Spatial Queries in PostGIS](/labs/lab_06.md) </br>
  <br> [Lab 7: Update and Proximity with PostGIS](/labs/lab_07.md) </br>
  <br> [Lab 8: Geometry Operations and Spatial Analysis](/labs/lab_08.md) </br>
+ <br> [Final Project: NYC Household Income and Transportation Access Spatial Analysis](/final/final.md)
