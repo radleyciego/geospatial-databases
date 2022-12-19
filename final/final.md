@@ -3,6 +3,8 @@
 <br> December 19, 2022 <br>
 <br> GTECH 78519: Geospatial Databases <br>
 
+<br> Research Questions: What is the average income of New York City residents who live within a quarter mile of a subway station? What are the ten stations with the highest and lowest average income within a quarter mile? </br>
+
 ```
 # import shapefiles into database using psql
 shp2pgsql -s 4326 tl_2018_36_tract.shp public.nytracts | psql -h localhost -p 1841 -d learnsql -U postgres
