@@ -348,12 +348,21 @@ WHERE median_hh_income > 75000
 ![](/img/f9.png)
 
 ```sql
--- Determine the average household income within a quarter mile of each station
-SELECT s.name, sum(aggregate_hh_income)/sum(hh_total) AS avg_hh_income
+-- Determine the average household income within a quarter mile of each station, order by average income ascending
+SELECT s.name, ROUND(sum(aggregate_hh_income)/sum(hh_total)) AS avg_hh_income
 FROM geo_nyc_tract_income i JOIN vw_geo_nyc_station s
 ON (ST_Dwithin(i.geom_3748, s.geom_3748, 402.336))
 GROUP BY s.name
+ORDER BY avg_hh_income ASC
+
+-- Order by average income descending
+SELECT s.name, ROUND(sum(aggregate_hh_income)/sum(hh_total)) AS avg_hh_income
+FROM geo_nyc_tract_income i JOIN vw_geo_nyc_station s
+ON (ST_Dwithin(i.geom_3748, s.geom_3748, 402.336))
+GROUP BY s.name
+ORDER BY avg_hh_income DESC
 ```
 
 ![](/img/f11.png)
+![](/img/f13.png)
 ![](/img/f12.png)
