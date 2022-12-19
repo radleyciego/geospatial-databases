@@ -350,6 +350,15 @@ WHERE median_hh_income > 75000
 ![](/img/f9.png)
 
 ```sql
+-- Create 1/4 buffer around each station for analysis, visualize in QGIS
+CREATE TABLE mta_income_buffer AS
+SELECT gid, line, name, ST_Buffer(geom_3748, 402.336) AS geom
+FROM vw_geo_nyc_station
+```
+
+![](/img/f12.png)
+
+```sql
 -- Determine the average household income within a quarter mile of each station, order by average income ascending
 SELECT s.name, ROUND(sum(aggregate_hh_income)/sum(hh_total)) AS avg_hh_income
 FROM geo_nyc_tract_income i JOIN vw_geo_nyc_station s
@@ -367,4 +376,3 @@ ORDER BY avg_hh_income DESC
 
 ![](/img/f11.png)
 ![](/img/f13.png)
-![](/img/f12.png)
