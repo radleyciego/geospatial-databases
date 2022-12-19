@@ -356,4 +356,4 @@ GROUP BY s.name
 ```
 
 ![](/img/f11.png)
-
+![](/img/f12.png)
