@@ -322,6 +322,7 @@ CREATE TABLE acs2011_5yr_seq0056
 
 ```sql
 -- Join household income data to geoheader
+CREATE VIEW vw_tract_household_income AS
 SELECT
 substr(geoid, 8) AS geoid, b19001001 AS hh_total,
 b19001002 AS hh_under_10k, b19001003 AS hh_10k_to_15k,
@@ -336,4 +337,13 @@ b19013001 AS median_hh_income, b19025001 AS aggregate_hh_income
 FROM acs2011_5yr_seq0056 JOIN acs2011_5yr_geoheader USING (stusab, logrecno)
 WHERE sumlevel = 140;
 ```
+
+```sql
+-- Determine how many census tracts have a median income of more than 75,000
+SELECT *
+FROM vw_tract_household_income
+WHERE median_hh_income > 75000
+```
+
+![](/img/f9.png)
 
