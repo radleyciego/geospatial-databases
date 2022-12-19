@@ -53,7 +53,7 @@ SET geom_3748=ST_Transform(geom, 3748);
 
 ```sql
 -- Create and import acs geoheader table
-CREATE TABLE acs2011_5yr_geoheader
+CREATE TABLE acs_5yr_geoheader
 (fileid character varying(6), -- Always equal to ACS Summary File identification
  stusab character varying(2) NOT NULL, -- State Postal Abbreviation
  sumlevel integer, -- Summary Level
@@ -112,7 +112,7 @@ CREATE TABLE acs2011_5yr_geoheader
 
 ```sql
 -- Create and import acs household income table
-CREATE TABLE acs2011_5yr_seq0056
+CREATE TABLE acs_5yr_seq0056
 (
   fileid character varying(50),
   filetype character varying(50),
@@ -336,7 +336,7 @@ b19001012 AS hh_60k_to_75k, b19001013 AS hh_75k_to_100k,
 b19001014 AS hh_100k_to_125k, b19001015 AS hh_125k_to_150k,
 b19001016 AS hh_150k_to_200k, b19001017 AS hh_over_200k,
 b19013001 AS median_hh_income, b19025001 AS aggregate_hh_income
-FROM acs2011_5yr_seq0056 JOIN acs2011_5yr_geoheader USING (stusab, logrecno)
+FROM acs_5yr_seq0056 JOIN acs_5yr_geoheader USING (stusab, logrecno)
 WHERE sumlevel = 140;
 ```
 
