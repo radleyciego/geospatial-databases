@@ -50,6 +50,7 @@ SET geom_3748=ST_Transform(geom, 3748);
 ![](/img/f8.png)
 
 ```sql
+-- Create and import acs geoheader table
 CREATE TABLE acs2011_5yr_geoheader
 (fileid character varying(6), -- Always equal to ACS Summary File identification
  stusab character varying(2) NOT NULL, -- State Postal Abbreviation
@@ -108,6 +109,7 @@ CREATE TABLE acs2011_5yr_geoheader
 ```
 
 ```sql
+-- Create and import acs household income table
 CREATE TABLE acs2011_5yr_seq0056
 (
   fileid character varying(50),
@@ -316,5 +318,22 @@ CREATE TABLE acs2011_5yr_seq0056
   b19025i001 double precision,
   CONSTRAINT seq0056_pkey PRIMARY KEY (stusab, logrecno)
 );
+```
+
+```sql
+-- Join household income data to geoheader
+SELECT
+substr(geoid, 8) AS geoid, b19001001 AS hh_total,
+b19001002 AS hh_under_10k, b19001003 AS hh_10k_to_15k,
+b19001004 AS hh_15k_to_20k, b19001005 AS hh_20k_to_25k,
+b19001006 AS hh_25k_to_30k, b19001007 AS hh_30k_to_35k,
+b19001008 AS hh_35k_to_40k, b19001009 AS hh_40k_to_45k,
+b19001010 AS hh_45k_to_50k, b19001011 AS hh_50k_to_60k,
+b19001012 AS hh_60k_to_75k, b19001013 AS hh_75k_to_100k,
+b19001014 AS hh_100k_to_125k, b19001015 AS hh_125k_to_150k,
+b19001016 AS hh_150k_to_200k, b19001017 AS hh_over_200k,
+b19013001 AS median_hh_income, b19025001 AS aggregate_hh_income
+FROM acs2011_5yr_seq0056 JOIN acs2011_5yr_geoheader USING (stusab, logrecno)
+WHERE sumlevel = 140;
 ```
 
