@@ -3,7 +3,7 @@
 <br> December 19, 2022 <br>
 <br> GTECH 78519: Geospatial Databases <br>
 
-<br> Research Questions: What is the average income of New York City residents who live within a quarter mile of a subway station? What are the ten stations with the highest and lowest average income within a quarter mile? </br>
+<br> Research Questions: What is the average income of New York City residents who live within a quarter mile of a subway station? What are the ten stations with the highest and lowest average income within a quarter mile? Which borough has the lowest percentage of households with an average income < $40,000? How many census tracts have a median income > $75,000? </br>
 
 ```
 # import shapefiles into database using psql
@@ -23,7 +23,6 @@ SELECT * FROM nytracts
 WHERE (countyfp = '005' OR countyfp = '081' OR countyfp = '047' OR countyfp = '061' OR countyfp = '085')
 AND (aland != '0'));
 ```
-
 ![NYC Census Tracts](/img/f1.png)
 
 ```sql
@@ -52,278 +51,66 @@ SET geom_3748=ST_Transform(geom, 3748);
 ![](/img/f8.png)
 
 ```sql
--- Create and import acs geoheader table
+-- Create and import acs census data 
 CREATE TABLE acs_5yr_geoheader
-(fileid character varying(6), -- Always equal to ACS Summary File identification
- stusab character varying(2) NOT NULL, -- State Postal Abbreviation
- sumlevel integer, -- Summary Level
- component character varying(2), -- Geographic Component
- logrecno integer NOT NULL, -- Logical Record Number
- us character varying(1), -- US
- region character varying(1), -- Census Region
- division character varying(1), -- Census Division
- statece character varying(2), -- State (Census Code)
- state character varying(2), -- State (FIPS Code)
- county character varying(3), -- County of current residence
- cousub character varying(5), -- County Subdivision (FIPS)
-  place character varying(5), -- Place (FIPS Code)
-  tract character varying(6), -- Census Tract
-  blkgrp character varying(1), -- Block Group
-  concit character varying(5), -- Consolidated City
-  aianhh character varying(4), -- American Indian Area/Alaska Native Area/ Hawaiian Home Land (Census)
-  aianhhfp character varying(5), -- American Indian Area/Alaska Native Area/ Hawaiian Home Land (FIPS)
-  aihhtli character varying(1), -- American Indian Trust Land/ Hawaiian Home Land Indicator
-  aitsce character varying(3), -- American Indian Tribal Subdivision (Census)
-  aits character varying(5), -- American Indian Tribal Subdivision (FIPS)
-  anrc character varying(5), -- Alaska Native Regional Corporation (FIPS)
-  cbsa character varying(5), -- Metropolitan and Micropolitan Statistical Area
-  csa character varying(3), -- Combined Statistical Area
-  metdiv character varying(5), -- Metropolitan Statistical Area-Metropolitan Division
-  macc character varying(1), -- Metropolitan Area Central City
-  memi character varying(1), -- Metropolitan/Micropolitan Indicator Flag
-  necta character varying(5), -- New England City and Town Area
-  cnecta character varying(3), -- New England City and Town Combined Statistical Area
-  nectadiv character varying(5), -- New England City and Town Area Division
-  ua character varying(5), -- Urban Area
-  blank1 character varying(5), -- Reserved for future use
-  cdcurr character varying(2), -- Current Congressional District ***
-  sldu character varying(3), -- State Legislative District Upper
-  sldl character varying(3), -- State Legislative District Lower
-  blank2 character varying(6), -- Reserved for future use
-  blank3 character varying(3), -- Reserved for future use
-  zcta5 character varying(5), -- 5-digit ZIP Code Tabulation Area
-  submcd character varying(5), -- Subminor Civil Division (FIPS)
-  sdelm character varying(5), -- State-School District (Elementary)
-  sdsec character varying(5), -- State-School District (Secondary)
-  sduni character varying(5), -- State-School District (Unified)
-  ur character varying(1), -- Urban/Rural
-  pci character varying(1), -- Principal City Indicator
-  blank5 character varying(6), -- Reserved for future use
-  blank6 character varying(5), -- Reserved for future use
-  puma5 character varying(5), -- Public Use Microdata Area - 5% File
-  blank7 character varying(5), -- Reserved for future use
-  geoid character varying(40), -- Geographic Identifier
-  name character varying(1000), -- Area Name
-  bttr character varying(6), -- Tribal Tract
-  btbg character varying(1), -- Tribal Block Group
+(fileid character varying(6), 
+ stusab character varying(2) NOT NULL, 
+ sumlevel integer,
+ component character varying(2),
+ logrecno integer NOT NULL,
+ us character varying(1),
+ region character varying(1),
+ division character varying(1),
+ statece character varying(2),
+ state character varying(2),
+ county character varying(3),
+ cousub character varying(5),
+  place character varying(5),
+  tract character varying(6),
+  blkgrp character varying(1),
+  concit character varying(5),
+  aianhh character varying(4),
+  aianhhfp character varying(5),
+  aihhtli character varying(1),
+  aitsce character varying(3),
+  aits character varying(5),
+  anrc character varying(5),
+  cbsa character varying(5),
+  csa character varying(3),
+  metdiv character varying(5),
+  macc character varying(1),
+  memi character varying(1),
+  necta character varying(5),
+  cnecta character varying(3),
+  nectadiv character varying(5),
+  ua character varying(5),
+  blank1 character varying(5),
+  cdcurr character varying(2),
+  sldu character varying(3),
+  sldl character varying(3),
+  blank2 character varying(6),
+  blank3 character varying(3),
+  zcta5 character varying(5),
+  submcd character varying(5),
+  sdelm character varying(5),
+  sdsec character varying(5),
+  sduni character varying(5),
+  ur character varying(1),
+  pci character varying(1),
+  blank5 character varying(6),
+  blank6 character varying(5),
+  puma5 character varying(5),
+  blank7 character varying(5),
+  geoid character varying(40),
+  name character varying(1000),
+  bttr character varying(6),
+  btbg character varying(1),
   blank8 character varying(44),
-  CONSTRAINT geoheader_pkey PRIMARY KEY (stusab, logrecno)) -- Reserved for future use;
+  CONSTRAINT geoheader_pkey PRIMARY KEY (stusab, logrecno));
 ```
 
 ```sql
--- Create and import acs household income table
-CREATE TABLE acs_5yr_seq0056
-(
-  fileid character varying(50),
-  filetype character varying(50),
-  stusab character varying(2) NOT NULL,
-  chariter character varying(3),
-  seq character varying(4),
-  logrecno integer NOT NULL,
-  b19001001 double precision,
-  b19001002 double precision,
-  b19001003 double precision,
-  b19001004 double precision,
-  b19001005 double precision,
-  b19001006 double precision,
-  b19001007 double precision,
-  b19001008 double precision,
-  b19001009 double precision,
-  b19001010 double precision,
-  b19001011 double precision,
-  b19001012 double precision,
-  b19001013 double precision,
-  b19001014 double precision,
-  b19001015 double precision,
-  b19001016 double precision,
-  b19001017 double precision,
-  b19001a001 double precision,
-  b19001a002 double precision,
-  b19001a003 double precision,
-  b19001a004 double precision,
-  b19001a005 double precision,
-  b19001a006 double precision,
-  b19001a007 double precision,
-  b19001a008 double precision,
-  b19001a009 double precision,
-  b19001a010 double precision,
-  b19001a011 double precision,
-  b19001a012 double precision,
-  b19001a013 double precision,
-  b19001a014 double precision,
-  b19001a015 double precision,
-  b19001a016 double precision,
-  b19001a017 double precision,
-  b19001b001 double precision,
-  b19001b002 double precision,
-  b19001b003 double precision,
-  b19001b004 double precision,
-  b19001b005 double precision,
-  b19001b006 double precision,
-  b19001b007 double precision,
-  b19001b008 double precision,
-  b19001b009 double precision,
-  b19001b010 double precision,
-  b19001b011 double precision,
-  b19001b012 double precision,
-  b19001b013 double precision,
-  b19001b014 double precision,
-  b19001b015 double precision,
-  b19001b016 double precision,
-  b19001b017 double precision,
-  b19001c001 double precision,
-  b19001c002 double precision,
-  b19001c003 double precision,
-  b19001c004 double precision,
-  b19001c005 double precision,
-  b19001c006 double precision,
-  b19001c007 double precision,
-  b19001c008 double precision,
-  b19001c009 double precision,
-  b19001c010 double precision,
-  b19001c011 double precision,
-  b19001c012 double precision,
-  b19001c013 double precision,
-  b19001c014 double precision,
-  b19001c015 double precision,
-  b19001c016 double precision,
-  b19001c017 double precision,
-  b19001d001 double precision,
-  b19001d002 double precision,
-  b19001d003 double precision,
-  b19001d004 double precision,
-  b19001d005 double precision,
-  b19001d006 double precision,
-  b19001d007 double precision,
-  b19001d008 double precision,
-  b19001d009 double precision,
-  b19001d010 double precision,
-  b19001d011 double precision,
-  b19001d012 double precision,
-  b19001d013 double precision,
-  b19001d014 double precision,
-  b19001d015 double precision,
-  b19001d016 double precision,
-  b19001d017 double precision,
-  b19001e001 double precision,
-  b19001e002 double precision,
-  b19001e003 double precision,
-  b19001e004 double precision,
-  b19001e005 double precision,
-  b19001e006 double precision,
-  b19001e007 double precision,
-  b19001e008 double precision,
-  b19001e009 double precision,
-  b19001e010 double precision,
-  b19001e011 double precision,
-  b19001e012 double precision,
-  b19001e013 double precision,
-  b19001e014 double precision,
-  b19001e015 double precision,
-  b19001e016 double precision,
-  b19001e017 double precision,
-  b19001f001 double precision,
-  b19001f002 double precision,
-  b19001f003 double precision,
-  b19001f004 double precision,
-  b19001f005 double precision,
-  b19001f006 double precision,
-  b19001f007 double precision,
-  b19001f008 double precision,
-  b19001f009 double precision,
-  b19001f010 double precision,
-  b19001f011 double precision,
-  b19001f012 double precision,
-  b19001f013 double precision,
-  b19001f014 double precision,
-  b19001f015 double precision,
-  b19001f016 double precision,
-  b19001f017 double precision,
-  b19001g001 double precision,
-  b19001g002 double precision,
-  b19001g003 double precision,
-  b19001g004 double precision,
-  b19001g005 double precision,
-  b19001g006 double precision,
-  b19001g007 double precision,
-  b19001g008 double precision,
-  b19001g009 double precision,
-  b19001g010 double precision,
-  b19001g011 double precision,
-  b19001g012 double precision,
-  b19001g013 double precision,
-  b19001g014 double precision,
-  b19001g015 double precision,
-  b19001g016 double precision,
-  b19001g017 double precision,
-  b19001h001 double precision,
-  b19001h002 double precision,
-  b19001h003 double precision,
-  b19001h004 double precision,
-  b19001h005 double precision,
-  b19001h006 double precision,
-  b19001h007 double precision,
-  b19001h008 double precision,
-  b19001h009 double precision,
-  b19001h010 double precision,
-  b19001h011 double precision,
-  b19001h012 double precision,
-  b19001h013 double precision,
-  b19001h014 double precision,
-  b19001h015 double precision,
-  b19001h016 double precision,
-  b19001h017 double precision,
-  b19001i001 double precision,
-  b19001i002 double precision,
-  b19001i003 double precision,
-  b19001i004 double precision,
-  b19001i005 double precision,
-  b19001i006 double precision,
-  b19001i007 double precision,
-  b19001i008 double precision,
-  b19001i009 double precision,
-  b19001i010 double precision,
-  b19001i011 double precision,
-  b19001i012 double precision,
-  b19001i013 double precision,
-  b19001i014 double precision,
-  b19001i015 double precision,
-  b19001i016 double precision,
-  b19001i017 double precision,
-  b19013001 double precision,
-  b19013a001 double precision,
-  b19013b001 double precision,
-  b19013c001 double precision,
-  b19013d001 double precision,
-  b19013e001 double precision,
-  b19013f001 double precision,
-  b19013g001 double precision,
-  b19013h001 double precision,
-  b19013i001 double precision,
-  b19019001 double precision,
-  b19019002 double precision,
-  b19019003 double precision,
-  b19019004 double precision,
-  b19019005 double precision,
-  b19019006 double precision,
-  b19019007 double precision,
-  b19019008 double precision,
-  b19025001 double precision,
-  b19025a001 double precision,
-  b19025b001 double precision,
-  b19025c001 double precision,
-  b19025d001 double precision,
-  b19025e001 double precision,
-  b19025f001 double precision,
-  b19025g001 double precision,
-  b19025h001 double precision,
-  b19025i001 double precision,
-  CONSTRAINT seq0056_pkey PRIMARY KEY (stusab, logrecno)
-);
-```
-
-```sql
--- Join household income data to geoheader
+-- Create view of household income data joined to census shapefile
 CREATE VIEW vw_tract_household_income AS
 SELECT
 substr(geoid, 8) AS geoid, b19001001 AS hh_total,
@@ -339,6 +126,20 @@ b19013001 AS median_hh_income, b19025001 AS aggregate_hh_income
 FROM acs_5yr_seq0056 JOIN acs_5yr_geoheader USING (stusab, logrecno)
 WHERE sumlevel = 140;
 ```
+```sql
+--  Identify the percentage of households with an income less than $40,000
+SELECT
+substr(geoid, 1, 5) AS county_fips, sum(hh_total) AS hh_total,
+sum(hh_under_10k + hh_10k_to_15k + hh_15k_to_20k + hh_20k_to_25k
+	+ hh_25k_to_30k + hh_30k_to_35k + hh_35k_to_40k) AS hh_under_40k,
+100.0 * sum(hh_under_10k + hh_10k_to_15k + hh_15k_to_20k + hh_20k_to_25k
++ hh_25k_to_30k + hh_30k_to_35k + hh_35k_to_40k) /sum(hh_total) AS pct_hh_under_40k
+FROM vw_tract_household_income
+WHERE substr(geoid, 1, 5) IN ('36005', '36047', '36061','36081','36085')
+GROUP BY county_fips;
+```
+
+![](/img/f10.png)
 
 ```sql
 -- Determine how many census tracts have a median income of more than 75,000
